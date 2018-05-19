@@ -5,32 +5,40 @@ package br.com.rmso.filmesfamosos;
  */
 
 public class Movie {
-    private String title;
-    private String overview;
-    private String average;
-    private String date;
+    private String id = "id";
+    private String results = "results";
+    private String date = "release_date";
+    private String average = "vote_average";
+    private String poster_path = "poster_path";
+    private String backdrop_path = "backdrop_path";
+    private String overview = "overview";
+    private String title = "original_title";
 
-    public Movie(String title, String overview, String average, String date){
-        this.title = title;
-        this.overview = overview;
-        this.average = average;
+    public Movie() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getResults() {
+        return results;
+    }
+
+    public void setResults(String results) {
+        this.results = results;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
         this.date = date;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
     }
 
     public String getAverage() {
@@ -41,11 +49,35 @@ public class Movie {
         this.average = average;
     }
 
-    public String getDate() {
-        return date;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -1,13 +1,17 @@
 package br.com.rmso.filmesfamosos;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,45 +20,49 @@ import java.util.List;
  * Created by Raquel on 15/05/2018.
  */
 
-public class MovieAdapter extends BaseAdapter {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private final Movie[] movies;
-    private final Context mContext;
+    private int mNumberItems;
+    private List<Movie> mMoviesList;
+    private Context mContext;
 
-    public MovieAdapter(Context context, Movie[] movies){
-      this.mContext = context;
-      this.movies = movies;
+    public Context getContext(){
+        return mContext;
     }
 
-
-    @Override
-    public int getCount() {
-        return movies.length;
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
+    public MovieAdapter (Context context){
+        mContext = context;
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_list_item, viewGroup, false);
+        MovieViewHolder viewHolder = new MovieViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
-        final Movie movie = movies[position];
+    public void onBindViewHolder(MovieViewHolder holder, int position) {
+        Movie movie = mMoviesList.get(position);
+        Picasso.with(mContext).load(movie.getBackdrop_path()).into(holder.movieCoverImageView);
+       }
 
-        if (view == null){
-            final LayoutInflater layoutInflater = LayoutInflater.from(
-                    mContext);
-            view = layoutInflater.inflate(R.layout.movie_list_item, null);
+    @Override
+    public int getItemCount() {
+        if (mMoviesList !=null) return mMoviesList.size(); else return 0;
+    }
+
+    public void setMovieData(ArrayList MovieData) {
+        mMoviesList = MovieData;
+    }
+
+    public class MovieViewHolder extends RecyclerView.ViewHolder  {
+        ImageView movieCoverImageView;
+
+        public MovieViewHolder(View itemView) {
+            super(itemView);
+            movieCoverImageView = itemView.findViewById(R.id.img_movie_cover);
         }
-
-        final ImageView mCoverImageView = view.findViewById(R.id.img_movie_cover);
-        final TextView mNameMovieTextView = view.findViewById(R.id.tv_movie_name);
-
-        return view;
     }
+
 }
