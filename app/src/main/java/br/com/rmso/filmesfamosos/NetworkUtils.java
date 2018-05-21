@@ -1,12 +1,9 @@
 package br.com.rmso.filmesfamosos;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,7 +13,7 @@ import java.util.Scanner;
  * Created by Raquel on 17/05/2018.
  */
 
-public class NetworkUtils {
+class NetworkUtils {
 
     private static final String baseMoviePOPURL = "http://api.themoviedb.org/3/movie/popular?api_key=";
     private static final String baseMovieTOPURL = "http://api.themoviedb.org/3/movie/top_rated?api_key=";

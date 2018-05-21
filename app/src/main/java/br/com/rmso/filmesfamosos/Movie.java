@@ -1,10 +1,13 @@
 package br.com.rmso.filmesfamosos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Raquel on 16/05/2018.
  */
 
-public class Movie {
+public class Movie implements Parcelable{
     private String id = "id";
     private String results = "results";
     private String date = "release_date";
@@ -16,6 +19,29 @@ public class Movie {
 
     public Movie() {
     }
+
+    private Movie (Parcel p) {
+        id = p.readString();
+        results = p.readString();
+        date = p.readString();
+        average = p.readString();
+        poster_path = p.readString();
+        backdrop_path = p.readString();
+        overview = p.readString();
+        title = p.readString();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -79,5 +105,22 @@ public class Movie {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(results);
+        parcel.writeString(date);
+        parcel.writeString(average);
+        parcel.writeString(poster_path);
+        parcel.writeString(backdrop_path);
+        parcel.writeString(overview);
+        parcel.writeString(title);
     }
 }

@@ -1,15 +1,11 @@
 package br.com.rmso.filmesfamosos;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,28 +18,29 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private int mNumberItems;
     private List<Movie> mMoviesList;
-    private Context mContext;
+    private final Context mContext;
 
-    public Context getContext(){
-        return mContext;
-    }
+    private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MovieAdapter (Context context){
+    public MovieAdapter (Context context, MovieAdapterOnClickHandler clickHandler){
         mContext = context;
+        mClickHandler = clickHandler;
     }
 
+
+    public interface MovieAdapterOnClickHandler {
+        void onClick(int itemClicked, Movie movieClicked);
+    }
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.movie_list_item, viewGroup, false);
-        MovieViewHolder viewHolder = new MovieViewHolder(view);
-        return viewHolder;
+        return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Movie movie = mMoviesList.get(position);
+        final Movie movie = mMoviesList.get(position);
         Picasso.with(mContext).load(movie.getBackdrop_path()).into(holder.movieCoverImageView);
        }
 
@@ -56,13 +53,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         mMoviesList = MovieData;
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder  {
-        ImageView movieCoverImageView;
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public final ImageView movieCoverImageView;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
             movieCoverImageView = itemView.findViewById(R.id.img_movie_cover);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int itemPosition = getAdapterPosition();
+            Movie movieClicked = mMoviesList.get(itemPosition);
+            mClickHandler.onClick(itemPosition, movieClicked);
         }
     }
-
 }

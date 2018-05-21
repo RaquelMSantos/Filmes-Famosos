@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Raquel on 19/05/2018.
  */
 
-public final class MovieJsonUtils {
+final class MovieJsonUtils {
     private static final String IMG_URL = "http://image.tmdb.org/t/p/";
 
     public static ArrayList getSimpleMovieStringsFromJson(Context context, String movieJsonString) throws JSONException {
