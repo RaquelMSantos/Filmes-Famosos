@@ -1,6 +1,8 @@
 package br.com.rmso.filmesfamosos;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,11 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.support.v7.widget.Toolbar;
 
 import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import br.com.rmso.filmesfamosos.utilities.MovieJsonUtils;
+import br.com.rmso.filmesfamosos.utilities.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -33,8 +39,34 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieAdapter = new MovieAdapter(getApplicationContext(), this);
         mRecyclerView.setAdapter(mMovieAdapter);
         mLoadingMovies = findViewById(R.id.pb_loading_movies);
+        BottomNavigationView mBottomNavigationView = findViewById(R.id.bottom_navigation);
 
         loadMoviesData();
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_popular:
+                        showMovieDataView();
+                        new FetchMovieTask("popular").execute();
+                        break;
+
+                    case R.id.action_top_rated:
+                        showMovieDataView();
+                        new FetchMovieTask("top_rated").execute();
+                        break;
+
+                    case R.id.action_favorites:
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     private void loadMoviesData(){
@@ -103,33 +135,5 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             mRecyclerView.setVisibility(View.INVISIBLE);
             mLoadingMovies.setVisibility(View.VISIBLE);
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemid = item.getItemId();
-
-        switch (itemid) {
-            case R.id.action_popular:
-                showMovieDataView();
-                new FetchMovieTask("popular").execute();
-                break;
-
-            case R.id.action_top_rated:
-                showMovieDataView();
-                new FetchMovieTask("top_rated").execute();
-                break;
-
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

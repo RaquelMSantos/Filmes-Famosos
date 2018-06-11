@@ -1,4 +1,4 @@
-package br.com.rmso.filmesfamosos;
+package br.com.rmso.filmesfamosos.utilities;
 
 import android.net.Uri;
 
@@ -9,11 +9,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import br.com.rmso.filmesfamosos.BuildConfig;
+
 /**
  * Created by Raquel on 17/05/2018.
  */
 
-class NetworkUtils {
+public class NetworkUtils {
     private static String apiKey = BuildConfig.MovieApiKey;
     private static final String baseMoviePOPURL = "http://api.themoviedb.org/3/movie/popular?api_key="+apiKey;
     private static final String baseMovieTOPURL = "http://api.themoviedb.org/3/movie/top_rated?api_key="+apiKey;

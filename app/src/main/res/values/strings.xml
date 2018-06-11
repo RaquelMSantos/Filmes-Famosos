@@ -2,5 +2,6 @@
     <string name="app_name">Movies</string>
     <string name="action_popular">Popular</string>
     <string name="action_top_rated">Top Rated</string>
+    <string name="action_favorites">My Favorites</string>
 </resources>
 

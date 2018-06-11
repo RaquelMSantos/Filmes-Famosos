@@ -1,4 +1,4 @@
-package br.com.rmso.filmesfamosos;
+package br.com.rmso.filmesfamosos.utilities;
 
 import android.content.Context;
 
@@ -8,11 +8,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.com.rmso.filmesfamosos.Movie;
+
 /**
  * Created by Raquel on 19/05/2018.
  */
 
-final class MovieJsonUtils {
+public final class MovieJsonUtils {
     private static final String IMG_URL = "http://image.tmdb.org/t/p/";
 
     public static ArrayList getSimpleMovieStringsFromJson(Context context, String movieJsonString) throws JSONException {
