@@ -11,9 +11,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "MovieApiKey", MovieApiKey
+            resValue 'string', "movie_api_key", MovieApiKey
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "MovieApiKey", MovieApiKey
+            resValue 'string', "movie_api_key", MovieApiKey
         }
     }
 }

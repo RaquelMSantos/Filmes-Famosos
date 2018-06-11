@@ -14,10 +14,9 @@ import java.util.Scanner;
  */
 
 class NetworkUtils {
-
-    private static final String baseMoviePOPURL = "http://api.themoviedb.org/3/movie/popular?api_key=";
-    private static final String baseMovieTOPURL = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
-
+    private static String apiKey = BuildConfig.MovieApiKey;
+    private static final String baseMoviePOPURL = "http://api.themoviedb.org/3/movie/popular?api_key="+apiKey;
+    private static final String baseMovieTOPURL = "http://api.themoviedb.org/3/movie/top_rated?api_key="+apiKey;
 
     public static URL buildUrl(String baseURL){
         URL url = null;
