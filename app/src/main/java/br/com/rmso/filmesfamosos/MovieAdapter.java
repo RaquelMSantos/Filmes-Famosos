@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +43,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final Movie movie = mMoviesList.get(position);
         Picasso.with(mContext).load(movie.getBackdrop_path()).into(holder.movieCoverImageView);
+        holder.mTitleMovieTextView.setText(mMoviesList.get(position).getTitle());
+        holder.mAverageMovieTextView.setText(mMoviesList.get(position).getAverage());
        }
 
     @Override
@@ -55,10 +58,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView movieCoverImageView;
+        public final TextView mTitleMovieTextView;
+        public final TextView mAverageMovieTextView;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
             movieCoverImageView = itemView.findViewById(R.id.img_movie_cover);
+            mTitleMovieTextView = itemView.findViewById(R.id.tv_title_movie);
+            mAverageMovieTextView = itemView.findViewById(R.id.tv_average_movie);
             itemView.setOnClickListener(this);
         }
 
