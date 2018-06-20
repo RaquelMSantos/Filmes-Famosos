@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import br.com.rmso.filmesfamosos.Movie;
+import br.com.rmso.filmesfamosos.database.Movie;
 
 /**
  * Created by Raquel on 19/05/2018.

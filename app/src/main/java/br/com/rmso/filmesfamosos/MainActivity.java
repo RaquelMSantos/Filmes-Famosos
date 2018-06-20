@@ -1,23 +1,29 @@
 package br.com.rmso.filmesfamosos;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.support.v7.widget.Toolbar;
 
 import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
+import br.com.rmso.filmesfamosos.database.AppDatabase;
+import br.com.rmso.filmesfamosos.database.Movie;
 import br.com.rmso.filmesfamosos.utilities.MovieJsonUtils;
 import br.com.rmso.filmesfamosos.utilities.NetworkUtils;
 
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar mLoadingMovies;
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setAdapter(mMovieAdapter);
         mLoadingMovies = findViewById(R.id.pb_loading_movies);
         BottomNavigationView mBottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        mDb = AppDatabase.getInstance(getApplicationContext());
 
         loadMoviesData();
 
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                         break;
 
                     case R.id.action_favorites:
+                        retrieveMovies();
                         break;
 
                     default:
@@ -65,6 +75,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 }
 
                 return true;
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void retrieveMovies() {
+        ViewModel viewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(@Nullable List<Movie> movieList) {
+                mMovieAdapter.setMovies(movieList);
             }
         });
     }
@@ -81,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onClick(int itemClicked, Movie movieClicked) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("movie", movieClicked);
+        intent.putExtra(DetailActivity.EXTRA_MOVIE, movieClicked);
         startActivity(intent);
     }
 

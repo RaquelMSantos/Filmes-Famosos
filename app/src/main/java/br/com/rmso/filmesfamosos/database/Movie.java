@@ -1,13 +1,18 @@
-package br.com.rmso.filmesfamosos;
+package br.com.rmso.filmesfamosos.database;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Created by Raquel on 16/05/2018.
  */
-
+@Entity(tableName = "movie")
 public class Movie implements Parcelable{
+    @PrimaryKey(autoGenerate = true)
+    private int idKey;
     private String id = "id";
     private String results = "results";
     private String date = "release_date";
@@ -17,7 +22,18 @@ public class Movie implements Parcelable{
     private String overview = "overview";
     private String title = "original_title";
 
+    @Ignore
     public Movie() {
+    }
+
+    public Movie(int idKey, String id, String date, String average, String backdrop_path, String overview, String title) {
+        this.idKey = idKey;
+        this.id = id;
+        this.date = date;
+        this.average = average;
+        this.backdrop_path = backdrop_path;
+        this.overview = overview;
+        this.title = title;
     }
 
     private Movie (Parcel p) {
@@ -105,6 +121,14 @@ public class Movie implements Parcelable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getIdKey() {
+        return idKey;
+    }
+
+    public void setIdKey(int idKey) {
+        this.idKey = idKey;
     }
 
     @Override

@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.rmso.filmesfamosos.database.Movie;
+
 /**
  * Created by Raquel on 15/05/2018.
  */
@@ -51,6 +53,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public int getItemCount() {
         if (mMoviesList !=null) return mMoviesList.size(); else return 0;
     }
+
+    public List<Movie> getMovies() {
+        return mMoviesList;
+    }
+
+    public void setMovies(List<Movie> moviesList) {
+        mMoviesList = moviesList;
+        notifyDataSetChanged();
+    }
+
 
     public void setMovieData(ArrayList MovieData) {
         mMoviesList = MovieData;
