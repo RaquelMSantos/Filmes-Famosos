@@ -1,4 +1,4 @@
-package br.com.rmso.filmesfamosos;
+package br.com.rmso.filmesfamosos.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.rmso.filmesfamosos.R;
 import br.com.rmso.filmesfamosos.database.Movie;
 
 /**
@@ -35,6 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public interface MovieAdapterOnClickHandler {
         void onClick(int itemClicked, Movie movieClicked);
     }
+
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.movie_list_item, viewGroup, false);
@@ -45,8 +47,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final Movie movie = mMoviesList.get(position);
         Picasso.with(mContext).load(movie.getBackdrop_path()).into(holder.movieCoverImageView);
-        holder.mTitleMovieTextView.setText(mMoviesList.get(position).getTitle());
-        holder.mAverageMovieTextView.setText(mMoviesList.get(position).getAverage());
+        holder.mTitleMovieTextView.setText(movie.getTitle());
+        holder.mAverageMovieTextView.setText(movie.getAverage());
        }
 
     @Override

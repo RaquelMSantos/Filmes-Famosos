@@ -1,7 +1,5 @@
 package br.com.rmso.filmesfamosos;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.rmso.filmesfamosos.adapters.MovieAdapter;
 import br.com.rmso.filmesfamosos.database.AppDatabase;
 import br.com.rmso.filmesfamosos.database.Movie;
 import br.com.rmso.filmesfamosos.utilities.MovieJsonUtils;
@@ -82,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     protected void onResume() {
         super.onResume();
+        retrieveMovies();
     }
 
     private void retrieveMovies() {
