@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import br.com.rmso.filmesfamosos.Review;
 import br.com.rmso.filmesfamosos.Trailer;
 import br.com.rmso.filmesfamosos.database.Movie;
 

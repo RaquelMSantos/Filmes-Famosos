@@ -2,7 +2,6 @@ package br.com.rmso.filmesfamosos;
 
 import android.arch.lifecycle.*;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
 import br.com.rmso.filmesfamosos.database.AppDatabase;
 

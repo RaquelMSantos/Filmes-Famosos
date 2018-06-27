@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.amitshekhar.DebugDB;
+
 import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mDb = AppDatabase.getInstance(getApplicationContext());
 
+        DebugDB.getAddressLog();
+
         loadMoviesData();
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     protected void onResume() {
         super.onResume();
-        retrieveMovies();
     }
 
     private void retrieveMovies() {

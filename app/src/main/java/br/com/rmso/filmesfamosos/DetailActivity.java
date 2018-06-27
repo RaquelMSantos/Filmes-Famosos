@@ -11,12 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -208,7 +206,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mDb.movieDao().deleteMovie(movie);
+                List<Movie> movies = mDb.movieDao().loadMovieByUId(Integer.parseInt(movie.getId()));
+                mDb.movieDao().deleteMovie(movies.get(0));
             }
         });
     }

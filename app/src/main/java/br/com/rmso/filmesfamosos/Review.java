@@ -3,8 +3,6 @@ package br.com.rmso.filmesfamosos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import br.com.rmso.filmesfamosos.database.Movie;
-
 /**
  * Created by Raquel on 20/06/2018.
  */
