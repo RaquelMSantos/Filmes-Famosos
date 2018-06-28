@@ -66,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
 
-    public void setMovieData(ArrayList MovieData) {
+    public void setMovieData(List MovieData) {
         mMoviesList = MovieData;
     }
 
