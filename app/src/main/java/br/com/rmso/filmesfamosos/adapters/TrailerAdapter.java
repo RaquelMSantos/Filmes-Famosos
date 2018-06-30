@@ -49,7 +49,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         final Trailer trailer = trailerList.get(position);
         Picasso.with(context)
                 .load(IMG_URL.concat(trailer.getKey()).concat(finalUrl))
-                .placeholder(R.drawable.placeholder_videos).fit()
+                .placeholder(R.drawable.placeholder_videos).centerCrop()
                 .error(R.drawable.placeholder_image_error).fit()
                 .into(holder.mThumbnailImageView);
         holder.mTitleTrailerTextView.setText(trailer.getTitle());

@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.mAverageMovieTextView.setText(movie.getAverage());
         Picasso.with(mContext)
                 .load(movie.getBackdrop_path())
-                .placeholder(R.drawable.placeholder_image).fit()
+                .placeholder(R.drawable.placeholder_image).centerCrop()
                 .error(R.drawable.placeholder_image_error).fit()
                 .into(holder.movieCoverImageView);
        }

@@ -64,7 +64,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             if (savedInstanceState.containsKey(BUNDLE_STATE_MOVIE)){
                 movieType = savedInstanceState.getString(BUNDLE_STATE_MOVIE);
                 positionList = savedInstanceState.getInt(LIST_STATE);
-                loadMoviesData();
+                if (movieType.equals("popular") || movieType.equals("top_rated")){
+                    loadMoviesData();
+                }else {
+                    retrieveMovies();
+                }
             }
         }else {
             loadMoviesData();
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
                     case R.id.action_favorites:
                         retrieveMovies();
+                        movieType = "favorites";
+                        mRecyclerView.getLayoutManager().scrollToPosition(positionList);
                         break;
 
                     default:
