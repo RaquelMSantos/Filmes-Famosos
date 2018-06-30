@@ -47,7 +47,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     @Override
     public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
         final Trailer trailer = trailerList.get(position);
-        Picasso.with(context).load(IMG_URL.concat(trailer.getKey()).concat(finalUrl)).placeholder(R.drawable.placeholder_videos).fit().into(holder.mThumbnailImageView);
+        Picasso.with(context)
+                .load(IMG_URL.concat(trailer.getKey()).concat(finalUrl))
+                .placeholder(R.drawable.placeholder_videos).fit()
+                .error(R.drawable.placeholder_image_error).fit()
+                .into(holder.mThumbnailImageView);
         holder.mTitleTrailerTextView.setText(trailer.getTitle());
     }
 

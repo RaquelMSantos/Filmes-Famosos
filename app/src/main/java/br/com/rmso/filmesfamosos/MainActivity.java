@@ -3,15 +3,15 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -37,13 +37,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private ProgressBar mLoadingMovies;
     private GridLayoutManager layoutManager;
     private AppDatabase mDb;
-    private ArrayList<Movie> movieList;
     private String movieType = "popular";
     private static final String BUNDLE_STATE_MOVIE = "stateMovieBundle";
-    public static final String BUNDLE_LAYOUT = "layoutBundle";
-    Parcelable mListState;
-
-
+    public static final String LIST_STATE = "list_state";
+    public static int positionList = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         mRecyclerView = findViewById(R.id.rv_movies);
-        layoutManager = new GridLayoutManager(this, 2);
+        layoutManager = new GridLayoutManager(this, numberOfColumns());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         mMovieAdapter = new MovieAdapter(getApplicationContext(), this);
@@ -66,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         if (savedInstanceState != null){
             if (savedInstanceState.containsKey(BUNDLE_STATE_MOVIE)){
                 movieType = savedInstanceState.getString(BUNDLE_STATE_MOVIE);
-                Parcelable saved = savedInstanceState.getParcelable(BUNDLE_LAYOUT);
-                mRecyclerView.getLayoutManager().onRestoreInstanceState(saved);
+                positionList = savedInstanceState.getInt(LIST_STATE);
                 loadMoviesData();
             }
         }else {
@@ -105,13 +101,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putString(BUNDLE_STATE_MOVIE, movieType);
-        savedInstanceState.putParcelable(BUNDLE_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
+        savedInstanceState.putInt(LIST_STATE, positionList);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        positionList = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
     }
 
     private void retrieveMovies() {
@@ -122,6 +124,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 mMovieAdapter.setMovies(movieList);
             }
         });
+    }
+
+    private int numberOfColumns(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = 400;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        if (nColumns < 2) return 2;
+        return nColumns;
     }
 
     private void loadMoviesData(){
@@ -179,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 showMovieDataView();
                 mMovieAdapter.setMovieData(movieList);
                 mMovieAdapter.notifyDataSetChanged();
+                mRecyclerView.getLayoutManager().scrollToPosition(positionList);
             }
         }
 

@@ -46,9 +46,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         final Movie movie = mMoviesList.get(position);
-        Picasso.with(mContext).load(movie.getBackdrop_path()).into(holder.movieCoverImageView);
         holder.mTitleMovieTextView.setText(movie.getTitle());
         holder.mAverageMovieTextView.setText(movie.getAverage());
+        Picasso.with(mContext)
+                .load(movie.getBackdrop_path())
+                .placeholder(R.drawable.placeholder_image).fit()
+                .error(R.drawable.placeholder_image_error).fit()
+                .into(holder.movieCoverImageView);
        }
 
     @Override
